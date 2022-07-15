@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_sigin/screens/home_screen.dart';
 import 'package:firebase_sigin/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../reusable_widgets/reusable_widget.dart';
 
@@ -24,19 +25,19 @@ class _SignInScreenState extends State<SignInScreen> {
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
             gradient: LinearGradient(colors: [
-          Color.fromARGB(255, 10, 167, 23),
-          Color.fromARGB(255, 118, 11, 189),
-          Color.fromARGB(255, 44, 10, 167),
+          Color.fromARGB(255, 231, 19, 83),
+          Color.fromARGB(255, 211, 18, 163),
+          Color.fromARGB(255, 167, 10, 75),
         ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
         child: SingleChildScrollView(
             child: Padding(
           padding: EdgeInsets.fromLTRB(
-              20, MediaQuery.of(context).size.height * 0.1, 20, 0),
+              20, MediaQuery.of(context).size.height * 0.2, 20, 0),
           child: Column(
             children: <Widget>[
-              logoWidget("assets/images/logo1.png"),
+              logoWidget("assets/images/f.png"),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               reusableTextField("Enter Email or Username", Icons.person_outline,
                   false, __emailTextController),
@@ -51,16 +52,18 @@ class _SignInScreenState extends State<SignInScreen> {
               signInSignUpButton(context, true, () {
                 FirebaseAuth.instance
                     .signInWithEmailAndPassword(
-                        email: __emailTextController.text,
-                        password: _passwordTextController.text)
+                  email: __emailTextController.text,
+                  password: _passwordTextController.text,
+                )
                     .then((value) {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const HomeScreen()));
-                }).onError((error, stackTrace) {
-                  print("Error login");
                 });
+                Fluttertoast.showToast(
+                  msg: "Gagal Berhasil",
+                );
               }),
               signUpOption()
             ],
